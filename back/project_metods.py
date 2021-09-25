@@ -128,17 +128,6 @@ class Program_functions(object):
             self.file_name = input(self.lan["80"])
             self.full_name = os.path.join(self.dir_name, self.file_name)
 
-
-    def file_list_for_count_(self):
-        count_index = 0
-        for self.file_name in self.file_list:
-            self.full_name = os.path.join(self.dir_name, self.file_name)
-            if os.path.isfile(self.full_name):
-                if not "_copy_" in self.file_name:
-                    count_index += 1
-        return count_index
-
-
     def print_progress(self, text_content, index_1, index_2, index_3):
         if self.index < index_1 and self.index >= index_2:
             print("{0}: {1}% ({2}/{3}) {4}       \r".format(text_content, self.index, self.index_2, self.index_3, self.progress_bar_2[index_3]), end='')
@@ -160,8 +149,7 @@ class Program_GUI(Program_functions):
 
     def __init__(self, lan_p
         ):
-        super().__init__(lan_p
-                )
+        super().__init__(lan_p)
 
     def header(self):
         print("\033[2J")
@@ -275,12 +263,10 @@ class Sysyem_info(Program_functions):
             for self.file_name in self.file_list:
                 self.full_name = os.path.join(self.dir_name, self.file_name)
                 if os.path.isfile(self.full_name):
-                    if self.count_files <= 50:
-                        self.files.append(self.file_name)
+                    self.files.append(self.file_name)
                     self.count_files += 1
                 else:
-                    if self.count_folders <= 50:
-                        self.folders.append(self.file_name)
+                    self.folders.append(self.file_name)
                     self.count_folders += 1
             return True
         else:
@@ -323,12 +309,10 @@ class Sysyem_info(Program_functions):
                 print("{0}: {1}".format(self.lan["85"], self.count_folders))
                 wait()
                 print("{0}: {1}".format(self.lan["62"], (self.count_files + self.count_folders)))
-        except FileNotFoundError:
-            print(self.lan["57"])
-        except OSError:
+        except FileNotFoundError or OSError:
             print(self.lan["57"])
 
-    def c_info(self):
+    def main_info(self):
         print(self.tag .format("{0}:".format(self.lan["23"])))
         self.dir_name = os.getcwd()
         print("{0}: {1}".format(self.lan["18"], self.yellow.format(self.dir_name)))
@@ -618,6 +602,8 @@ class Calculator(Program_functions):
 
     def __init__(self, lan_p):
         self.calc_index = 0
+        self.break_point = False
+        self.reset_index = False
         super().__init__(lan_p)
 
     def calc_start(self):
@@ -631,57 +617,79 @@ class Calculator(Program_functions):
         self.cls()
         Program_GUI(self.lan).header()
         while True:
-            try:
-                if self.index_2 == 1:
-                    self.calculator(1)
-                else:
-                    self.index_2 = 0
-                    self.calculator(0)
+            if self.break_point:
                 self.cls()
-                Program_GUI(self.lan).header()
-            except ValueError:
-                print(self.lan["58"])
+                self.break_point = False
                 break
-            except KeyboardInterrupt:
-                break
+            if self.index_2 == 1:
+                self.calculator(1)
+            else:
+                self.index_2 = 0
+                self.calculator(0)
+            self.cls()
+            Program_GUI(self.lan).header()
+            
 
     def calculator(self, modification):
-        print(self.lan["42"])
+        print("{0}:".format(self.lan["42"]))
         a, sy, b = '', '', ''
         if modification == 0:
             nums = input(">")
-            if nums == 'long':
+            if nums == '--long':
                 self.calc_long()
+            elif nums == '--break':
+                self.cls()
+                self.break_point = True
             else:
                 a, sy, b = nums.split(' ')
             
         elif modification == 1:
-            a = self.calc_index
-            nums = input(" >{0} ".format(a))
-            sy, b = nums.split(' ')
-        a, b = float(a), float(b)
-        if sy == "+":
-            self.count(a, b, "+")
-            self.answer__0()
-        elif sy == "-":
-            self.count(a, b, "-")
-            self.answer__0()
-        elif sy == "*":
-            self.count(a, b, "*")
-            self.answer__0()
-        elif sy == "^":
-            self.count(a, b, "**")
-            self.answer__0()
-        elif sy == "/":
-            if not b == 0:
-                self.count(a, b, "/")
+            self.break_point = False
+            if not self.reset_index:
+                try:
+                    a = self.calc_index
+                    nums = input(">{0} ".format(a))
+                    sy, b = nums.split(' ')
+                except:
+                    pass
             else:
-                print(self.lan["64"])
+                try:
+                    nums = input(">")
+                    a, sy, b = nums.split(' ')
+                    self.reset_index = False
+                    print("{0} \n{1}".format(self.reset_index, self.break_point))
+                except:
+                    pass
+            if nums == "--break":
+                self.break_point = True
+            elif nums == "--reset":
+                self.reset_index = True
+        if self.reset_index != True and self.break_point != True:
+            a, b = float(a), float(b)
+            if sy == "+":
+                self.count(a, b, "+")
+                self.answer__0()
+            elif sy == "-":
+                self.count(a, b, "-")
+                self.answer__0()
+            elif sy == "*":
+                self.count(a, b, "*")
+                self.answer__0()
+            elif sy == "^":
+                self.count(a, b, "**")
+                self.answer__0()
+            elif sy == "/":
+                if not b == 0:
+                    self.count(a, b, "/")
+                else:
+                    print(self.lan["64"])
+            else:
+                pass
+            if not modification == 1:
+                    print("{0}".format(self.green.format("{0} {1}".format(self.lan["39"], self.calc_index))))
+                    self.index_2 = 1
         else:
-            pass
-        if not modification == 1:
-                print("{0}".format(self.green.format("{0} {1}".format(self.lan["39"], self.calc_index))))
-                self.index_2 = 1
+            self.index_2 = 1
 
     def count(self, a, b, action):
         if action == "+":

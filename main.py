@@ -67,7 +67,7 @@ class Program():
                 if self.actions1 == "1":
                     self.info.folder_info()
                 elif self.actions1 == "2":
-                    self.info.c_info()
+                    self.info.main_info()
                 elif self.actions1 == "3":
                     self.calc.calc_start()
                 elif self.actions1 == "4":
@@ -77,7 +77,6 @@ class Program():
                 elif self.actions1 == "dev":
                     self.actions_4()
                 elif self.actions1 == "reboot":
-                    self.GUI.reboot_animation()
                     self.reboot_program()
                 elif self.actions1 == "off":
                     self.other.exit()
@@ -85,7 +84,7 @@ class Program():
                     self.other.cls()
                     self.GUI.header()
                 elif self.actions1 == "calc long":
-                    self.other.calc_long()
+                    self.calc.calc_long()
                 else:
                     print("{0}".format(self.lan["27"]))
 
