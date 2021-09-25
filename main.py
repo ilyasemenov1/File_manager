@@ -27,33 +27,33 @@ init()
 
 class Program():
     def __init__(self, lan_p):
-        if __name__ == '__main__':
-            self.lan = ''
-            if lan_p == "ru":
-                self.lan = ru
-            if lan_p == "en":
-                self.lan = en
+        
+        self.lan = ''
+        if lan_p == "ru":
+            self.lan = ru
+        if lan_p == "en":
+            self.lan = en
 
-            self.GUI = Program_GUI(self.lan)
-            self.info = Sysyem_info(self.lan)
-            self.copy = Copy_files(self.lan)
-            self.delete = Delete_coped_files(self.lan)
-            self.dir = Directory_functions(self.lan)
-            self.calc = Calculator(self.lan)
-            self.other = Other(self.lan)
+        self.GUI = Program_GUI(self.lan)
+        self.info = Sysyem_info(self.lan)
+        self.copy = Copy_files(self.lan)
+        self.delete = Delete_coped_files(self.lan)
+        self.dir = Directory_functions(self.lan)
+        self.calc = Calculator(self.lan)
+        self.other = Other(self.lan)
 
-            self.home = ''
-            self.actions1 = ''
-            self.actions2 = ''
-            self.actions3 = ''
-            self.actions4 = ''
-            self.object = ''
+        self.is_start = ''
+        self.actions1 = ''
+        self.actions2 = ''
+        self.actions3 = ''
+        self.actions4 = ''
+        self.object = ''
 
     def qq_function(self):
         if __name__ == '__main__':
-            self.GUI.hi()
-            self.home = input("{0}:".format(self.lan["1"]))
-            if self.home == "y":
+            self.GUI.header()
+            self.is_start = input("{0}:".format(self.lan["1"]))
+            if self.is_start == "y":
                 self.actions_1()
             else:
                 self.other.exit()
@@ -83,11 +83,11 @@ class Program():
                     self.other.exit()
                 elif self.actions1 == "cls":
                     self.other.cls()
-                    self.GUI.hi()
+                    self.GUI.header()
                 elif self.actions1 == "calc long":
                     self.other.calc_long()
                 else:
-                    self.GUI.something_went_wrong()
+                    print("{0}".format(self.lan["27"]))
 
     def actions_2(self):
         if __name__ == '__main__':
@@ -101,7 +101,7 @@ class Program():
                 self.delete.delete_coped_files()
             elif self.actions2 == "cls":
                 self.other.cls()
-                self.GUI.hi()
+                self.GUI.header()
             elif self.actions2 == "reboot":
                 self.object = "break"
                 self.reboot_program()
@@ -109,7 +109,7 @@ class Program():
                 self.object = "break"
                 self.other.exit()
             else:
-                self.GUI.something_went_wrong()
+                print("{0}".format(self.lan["27"]))
 
     def actions_3(self):
         if __name__ == '__main__':
@@ -125,7 +125,7 @@ class Program():
                 self.dir.find_file()
             elif self.actions3 == "cls":
                 self.other.cls()
-                self.GUI.hi()
+                self.GUI.header()
             elif self.actions3 == "reboot":
                 self.object = "break"
                 self.reboot_program()
@@ -133,7 +133,7 @@ class Program():
                 self.object = "break"
                 self.other.exit()
             else:
-                self.GUI.something_went_wrong()
+                print("{0}".format(self.lan["27"]))
 
     def actions_4(self):
         if __name__ == '__main__':
@@ -147,24 +147,24 @@ class Program():
                 self.other.debug()
             elif self.actions4 == "cls":
                 self.other.cls()
-                self.GUI.hi()
+                self.GUI.header()
             elif self.actions4 == "reboot":
                 self.object = "break"
                 self.reboot_program()
             elif self.actions4 == "off":
                 self.other.exit()
             else:
-                self.GUI.something_went_wrong()
+                print("{0}".format(self.lan["27"]))
             
     def reboot_program(self):
         self.GUI.reboot_animation()
         lan_choose = input("[RU/EN]:")
         if lan_choose == "RU":
-            LAN = "ru"
-            Program(LAN).qq_function()
+            if __name__ == '__main__':
+                Program("ru").qq_function()
         elif lan_choose == "EN":
-            LAN = "en"
-            Program(LAN).qq_function()
+            if __name__ == "__main__":
+                Program("en").qq_function()
         else:
             self.other.exit()
 

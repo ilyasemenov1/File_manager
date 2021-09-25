@@ -4,15 +4,14 @@ import os
 import shutil
 import sys
 import time
-import textwrap
 from datetime import datetime
-from string import ascii_lowercase
+
 
 def wait():
     time.sleep(.05)
 
-VERSION_PROJECT = 13.4
-RELEASE_DATE = '07.06.2021'
+VERSION_PROJECT = "13.4.1"
+RELEASE_DATE = '25.09.2021'
 
 class Program_functions(object):
     def __init__(self, lan_p
@@ -42,13 +41,7 @@ class Program_functions(object):
         self.lightgreen = "\033[92m"
         self.h3 = []
         self.coped_file_list = []
-        self.progress_bar = {
-            "0": " [##   ]",
-            "1": " [ ##  ]",
-            "2": " [  ## ]",
-            "3": " [   ##]",
-            "4": " [#   #]"
-            }
+        self.progress_bar = [" [##   ]", " [ ##  ]",  " [  ## ]", " [   ##]", " [#   #]"]
         self.progress_bar_2 = {
             'off': "[----------]",
             '0': "[          ]",
@@ -164,7 +157,7 @@ class Program_GUI(Program_functions):
         super().__init__(lan_p
                 )
 
-    def hi(self):
+    def header(self):
         print("\033[2J")
         print(
             "v: {0}  {1}: {2}  {3}: {4}".format(
@@ -238,24 +231,19 @@ class Program_GUI(Program_functions):
         print(" [3] {0}".format("Debug"))
 
     def print_animation(self, index):
-        print(self.white.format("{0} {1}\r".format(self.lan["24"], self.progress_bar[index])), end='')
+        print(self.white.format("{0} {1}    \r".format(self.lan["24"], self.progress_bar[index])), end='')
         time.sleep(.4)
 
     def reboot_animation(self):
         print("\033[2J")
         x = 0
-        y = 0
-        while y < 9:
+        for y in range(9):
             if x > 4:
                 x = 0
             self.print_animation(x)
             x += 1
-            y += 1
         time.sleep(.1)
         print("\033[2J")
-
-    def something_went_wrong(self):
-        print(self.lan["27"])
 
 
 class Sysyem_info(Program_functions):
