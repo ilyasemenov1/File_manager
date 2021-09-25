@@ -27,9 +27,9 @@ class Program_functions(object):
         self.file_list = []
         self.file_name = ''
         self.count_index = 0
-        self.index = 0  #щетчик процентов
-        self.index_2 = 0  #щетчик чего-либо
-        self.index_3 = 0  #щетчик целого
+        self.index = 0
+        self.index_2 = 0
+        self.index_3 = 0
         self.index_4 = 0
         self.white = "\033[37m{}\033[0m"
         self.yellow = "\033[33m{}\033[0m"
@@ -41,21 +41,27 @@ class Program_functions(object):
         self.lightgreen = "\033[92m"
         self.h3 = []
         self.coped_file_list = []
-        self.progress_bar = [" [##   ]", " [ ##  ]",  " [  ## ]", " [   ##]", " [#   #]"]
-        self.progress_bar_2 = {
-            'off': "[----------]",
-            '0': "[          ]",
-            '1': "[#         ]",
-            '2': "[##        ]",
-            '3': "[###       ]",
-            '4': "[####      ]",
-            '5': "[#####     ]",
-            '6': "[######    ]",
-            '7': "[#######   ]",
-            '8': "[########  ]",
-            '9': "[######### ]",
-            '10': "[##########]"
-        }
+        self.progress_bar = [
+            " [##   ]",
+            " [ ##  ]",
+            " [  ## ]",
+            " [   ##]",
+            " [#   #]"
+            ]
+        self.progress_bar_2 = [
+            "[----------]",
+            "[          ]",
+            "[#         ]",
+            "[##        ]",
+            "[###       ]",
+            "[####      ]",
+            "[#####     ]",
+            "[######    ]",
+            "[#######   ]",
+            "[########  ]",
+            "[######### ]",
+            "[##########]"
+        ]
             
     def dir_name_input_to(self, input_text=None):
         if input_text:
@@ -138,17 +144,17 @@ class Program_functions(object):
             print("{0}: {1}% ({2}/{3}) {4}       \r".format(text_content, self.index, self.index_2, self.index_3, self.progress_bar_2[index_3]), end='')
 
     def progress_animation(self, text_content):
-        self.print_progress(text_content, 1, 0, 'off')
-        self.print_progress(text_content, 10, 0, '0')
-        self.print_progress(text_content, 20, 10, '1')
-        self.print_progress(text_content, 30, 20, '2')
-        self.print_progress(text_content, 40, 30, '3')
-        self.print_progress(text_content, 50, 40, '4')
-        self.print_progress(text_content, 60, 50, '5')
-        self.print_progress(text_content, 70, 60, '6')
-        self.print_progress(text_content, 80, 70, '7')
-        self.print_progress(text_content, 90, 80, '8')
-        self.print_progress(text_content, 100, 90, '9')
+        self.print_progress(text_content, 1, 0, 0)
+        self.print_progress(text_content, 10, 0, 1)
+        self.print_progress(text_content, 20, 10, 2)
+        self.print_progress(text_content, 30, 20, 3)
+        self.print_progress(text_content, 40, 30, 4)
+        self.print_progress(text_content, 50, 40, 5)
+        self.print_progress(text_content, 60, 50, 6)
+        self.print_progress(text_content, 70, 60, 7)
+        self.print_progress(text_content, 80, 70, 8)
+        self.print_progress(text_content, 90, 80, 9)
+        self.print_progress(text_content, 100, 90, 10)
 
 class Program_GUI(Program_functions):
 
@@ -161,9 +167,9 @@ class Program_GUI(Program_functions):
         print("\033[2J")
         print(
             "v: {0}  {1}: {2}  {3}: {4}".format(
-                self.green.format("13.4"),
+                self.green.format("13.4.1"),
                 self.lan["47"],
-                self.cyan_short.format("07.06.21"),
+                self.cyan_short.format("25.09.21"),
                 self.lan["48"],
                 self.yellow.format(self.lan["26"])
             )
@@ -256,8 +262,7 @@ class Sysyem_info(Program_functions):
         self.tag_1 = ''
         self.tag_2 = ''
         self._os_ = ''
-        super().__init__(lan_p
-                    )
+        super().__init__(lan_p)
 
     def file_v(self, file_list):
         for self.file_name in file_list:

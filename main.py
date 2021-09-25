@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- utf-8 -*-
 #pyinstaller main.py --onefile
-VERSION = 13.4
-RELEASE_DATE = "07.06.2021"
+VERSION = "13.4.1"
+RELEASE_DATE = "25.09.2021"
 
 from colorama import init
 from colorama import Fore, Back, Style
@@ -160,7 +160,7 @@ class Program():
         self.GUI.reboot_animation()
         lan_choose = input("[RU/EN]:")
         if lan_choose == "RU":
-            if __name__ == '__main__':
+            if __name__ == "__main__":
                 Program("ru").qq_function()
         elif lan_choose == "EN":
             if __name__ == "__main__":
@@ -170,11 +170,11 @@ class Program():
 
 lan_choose = input("[RU/EN]:")
 if lan_choose == "RU":
-    LAN = "ru"
-    Program(LAN).qq_function()
+    if __name__ == "__main__":
+        Program("ru").qq_function()
 elif lan_choose == "EN":
-    LAN = "en"
-    Program(LAN).qq_function()
+    if __name__ == "__main__":
+        Program("en").qq_function()
 else:
     print("\033[2J")
     exit(0)
