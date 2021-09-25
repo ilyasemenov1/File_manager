@@ -69,7 +69,7 @@ class Program():
                 elif self.actions1 == "2":
                     self.info.c_info()
                 elif self.actions1 == "3":
-                    self.calc.calc()
+                    self.calc.calc_start()
                 elif self.actions1 == "4":
                     self.actions_2()
                 elif self.actions1 == "5":

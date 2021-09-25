@@ -130,13 +130,13 @@ class Program_functions(object):
 
 
     def file_list_for_count_(self):
-        self.count_index = 0
+        count_index = 0
         for self.file_name in self.file_list:
             self.full_name = os.path.join(self.dir_name, self.file_name)
             if os.path.isfile(self.full_name):
                 if not "_copy_" in self.file_name:
-                    self.count_index += 1
-        return  self.count_index
+                    count_index += 1
+        return count_index
 
 
     def print_progress(self, text_content, index_1, index_2, index_3):
@@ -264,10 +264,10 @@ class Sysyem_info(Program_functions):
         self._os_ = ''
         super().__init__(lan_p)
 
-    def file_v(self, file_list):
-        for self.file_name in file_list:
+    def print_name_list(self, file_list):
+        for name in file_list:
             wait()
-            print(self.yellow.format(" " + self.file_name))
+            print(self.yellow.format(" " + name))
 
     def search_information(self):
         if self.dir_name_input_to():
@@ -313,10 +313,10 @@ class Sysyem_info(Program_functions):
 
                 if not self.count_files > 50 or self.count_files == 0:
                     print(self.tag_1)
-                    self.file_v(self.files)
+                    self.print_name_list(self.files)
                 if not self.count_folders > 50 or self.count_folders == 0:
                     print(self.tag_2)
-                    self.file_v(self.folders)
+                    self.print_name_list(self.folders)
                 wait()
                 print("{0}: {1}".format(self.lan["84"], self.count_files))
                 wait()
@@ -333,7 +333,9 @@ class Sysyem_info(Program_functions):
         self.dir_name = os.getcwd()
         print("{0}: {1}".format(self.lan["18"], self.yellow.format(self.dir_name)))
         print("{0}: {1}".format(self.lan["19"], self.cyan_short.format(os.getlogin())))
+
         self._os_ = str(sys.platform)
+
         if self._os_ == "win32":
             self._os_ = "Windows"
         elif self._os_ == "linux":
@@ -346,6 +348,7 @@ class Sysyem_info(Program_functions):
             self._os_ = 'OS/2'
         elif self._os_ == "os2emx":
             self._os_ = "OS/2 EMX"
+
         print("{0}: {1}".format(self.lan["20"], self.cyan_short.format(self._os_)))
         print("{0}: {1}".format(self.lan["21"], self.yellow.format(sys.getfilesystemencoding())))
 
@@ -374,24 +377,24 @@ class Copy_files(Program_functions):
                 self.new_file = new_file_name + '.' + format_name
                 self.full_name_2 = os.path.join(self.dir_name_2, self.new_file)
                 shutil.copy(self.full_name, self.full_name_2)
-            elif '_copy_' not in self.file_name:
+            else:
                 format_name = self.file_name.partition(".")[-1]
                 file_name = self.file_name.partition(".")[-3]
                 self.new_file = file_name + "_copy_1." + format_name
                 self.full_name_2 = os.path.join(self.dir_name_2, self.new_file)
                 shutil.copy(self.full_name, self.full_name_2)
-            else:
-                pass
         else:
             self.new_file = 'not_file'
 
     def find_files_to_copy(self):
+
         self.coped_file_list = []
         self.file_dict = {}
         self.format_list = []
         self.coped_file_index = []
         self.name_list = []
         self.not_coped_file_list = []
+
         for self.file_name in self.file_list:
             full_name_alg = os.path.join(self.dir_name, self.file_name)
             if os.path.isfile(full_name_alg):
@@ -614,25 +617,19 @@ class Directory_functions(Program_functions):
 class Calculator(Program_functions):
 
     def __init__(self, lan_p):
+        self.calc_index = 0
         super().__init__(lan_p)
 
-    def calc(self):
+    def calc_start(self):
         print(self.tag .format(self.lan["35"]))
         try:
             self.calculator(0)
-        except ValueError:
-            print(self.lan["58"])
-
-    def calc(self):
-        print(self.tag .format(self.lan["35"]))
-        try:
-            self.calculator(0)
-        except ValueError:
-            print(self.lan["58"])
+        except:
+            pass
 
     def calc_long(self):
         self.cls()
-        Program_GUI(self.lan).hi()
+        Program_GUI(self.lan).header()
         while True:
             try:
                 if self.index_2 == 1:
@@ -641,30 +638,28 @@ class Calculator(Program_functions):
                     self.index_2 = 0
                     self.calculator(0)
                 self.cls()
-                Program_GUI(self.lan).hi()
+                Program_GUI(self.lan).header()
             except ValueError:
                 print(self.lan["58"])
                 break
             except KeyboardInterrupt:
                 break
 
-    def calculator(self, argument):
+    def calculator(self, modification):
         print(self.lan["42"])
-        a = ''
-        sy = ''
-        b = ''
-        if argument == 0:
-            nums = input(" >")
+        a, sy, b = '', '', ''
+        if modification == 0:
+            nums = input(">")
             if nums == 'long':
                 self.calc_long()
-            a, sy, b = nums.split(' ')
+            else:
+                a, sy, b = nums.split(' ')
             
-        elif argument == 1:
-            a = self.index
-            nums = input(" >" + str(self.index) + " ")
+        elif modification == 1:
+            a = self.calc_index
+            nums = input(" >{0} ".format(a))
             sy, b = nums.split(' ')
-        a = float(a)
-        b = float(b)
+        a, b = float(a), float(b)
         if sy == "+":
             self.count(a, b, "+")
             self.answer__0()
@@ -684,30 +679,28 @@ class Calculator(Program_functions):
                 print(self.lan["64"])
         else:
             pass
-
-        if not argument == 1:
-                print(Fore.GREEN + self.lan["39"] + " " + str(self.index) + Fore.WHITE)
+        if not modification == 1:
+                print("{0}".format(self.green.format("{0} {1}".format(self.lan["39"], self.calc_index))))
                 self.index_2 = 1
 
-    def count(self, a, b, object_):
-        y = 0
-        if object_ == "+":
-            self.index = a + b
-        elif object_ == "-":
-            self.index = a - b
-        elif object_ == "*":
-            self.index = a * b
-        elif object_ == "**":
-            self.index = a ** b
-        elif object_ == "/":
+    def count(self, a, b, action):
+        if action == "+":
+            self.calc_index = a + b
+        elif action == "-":
+            self.calc_index = a - b
+        elif action == "*":
+            self.calc_index = a * b
+        elif action == "**":
+            self.calc_index = a ** b
+        elif action == "/":
             if b == 0:
                 print(self.lan["64"])
             else:
-                self.index = a / b
+                self.calc_index = a / b
 
     def answer__0(self):
-        if self.index % 1 == 0:
-            self.index = int(self.index)
+        if self.calc_index % 1 == 0:
+            self.calc_index = round(self.calc_index)
 
     def cls(self):
         if __name__ == '__main__':
