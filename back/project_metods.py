@@ -10,8 +10,8 @@ from datetime import datetime
 def wait():
     time.sleep(.05)
 
-VERSION_PROJECT = "13.4.1"
-RELEASE_DATE = '25.09.2021'
+VERSION_PROJECT = "13.5"
+RELEASE_DATE = '27.09.2021'
 
 class Program_functions(object):
     def __init__(self, lan_p
@@ -155,9 +155,9 @@ class Program_GUI(Program_functions):
         print("\033[2J")
         print(
             "v: {0}  {1}: {2}  {3}: {4}".format(
-                self.green.format("13.4.1"),
+                self.green.format("13.5"),
                 self.lan["47"],
-                self.cyan_short.format("25.09.21"),
+                self.cyan_short.format("27.09.21"),
                 self.lan["48"],
                 self.yellow.format(self.lan["26"])
             )

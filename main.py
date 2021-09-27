@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- utf-8 -*-
 #pyinstaller main.py --onefile
-VERSION = "13.4.1"
-RELEASE_DATE = "25.09.2021"
+VERSION = "13.5"
+RELEASE_DATE = "27.09.2021"
 
 from colorama import init
 from colorama import Fore, Back, Style
